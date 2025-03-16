@@ -2,8 +2,8 @@
 // main.go
 const (
 	CASE_SENSITIVE  = false
-	PRE_FIX         = "0x6666"
-	SUF_FIX         = "66"
+	PREFIX         = "0x6666"
+	SUFFIX         = "66"
 	INIT_KEY_AMOUNT = 50
 	GAP             = "0xffffffffffffffffffff"
 )
