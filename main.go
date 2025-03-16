@@ -62,7 +62,7 @@ func main() {
 	fmt.Printf("SeedKeyMap initialized, len: %v\n", len(seedKeys))
 
 	foundCh := make(chan struct{})
-	moniterChan := make(chan struct{})
+	monitorChan := make(chan struct{})
 	bigOne := big.NewInt(1)
 	gx := secp256k1.S256().Params().Gx
 	gy := secp256k1.S256().Params().Gy
@@ -74,7 +74,7 @@ func main() {
 
 			for {
 				if i != (len(seedKeys)-1) && j.Cmp(gap) == 0 {
-					fmt.Printf("go routine %v finished", i)
+					fmt.Printf("go routine %v finished\n", i)
 					return
 				}
 				select {
@@ -103,7 +103,7 @@ func main() {
 						gx, gy,
 					)
 					j.Add(j, bigOne)
-					moniterChan <- struct{}{}
+					monitorChan <- struct{}{}
 				}
 			}
 
@@ -114,7 +114,7 @@ func main() {
 		total := 0
 		for {
 			select {
-			case <-moniterChan:
+			case <-monitorChan:
 				total++
 				if total%1000000 == 0 {
 					fmt.Printf("searched %v account\n", total)
