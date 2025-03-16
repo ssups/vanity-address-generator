@@ -103,7 +103,9 @@ func main() {
 						gx, gy,
 					)
 					j.Add(j, bigOne)
-					monitorChan <- struct{}{}
+					if j.Int64()%10000 == 0 {
+						monitorChan <- struct{}{}
+					}
 				}
 			}
 
@@ -115,9 +117,9 @@ func main() {
 		for {
 			select {
 			case <-monitorChan:
-				total++
+				total += 10000
 				if total%1000000 == 0 {
-					fmt.Printf("searched %v account\n", total)
+					fmt.Printf("searched %v accounts\n", total)
 				}
 			case <-foundCh:
 				return
